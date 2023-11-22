@@ -21,10 +21,11 @@ export default function DoarForm() {
   const [imageurl, setImageurl] = useState("");
 
   async function uploadData() {
-    
     if (!imageUpload) return;
 
-    const imageRef = ref(storage, `doemateriais/images/${imageUpload.name}`);
+    if (imageUpload !== null) {
+      const imageRef = ref(storage, `doemateriais/images/${imageUpload.name}`);
+    }
 
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
@@ -39,12 +40,10 @@ export default function DoarForm() {
           estado,
           rua,
           numero,
-          url
+          url,
         });
       });
     });
-    
-    document.getElementById("form-doar").reset();
   }
 
   return (
