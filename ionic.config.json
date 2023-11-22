@@ -1,0 +1,7 @@
+{
+  "name": "DoeMateriais",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
