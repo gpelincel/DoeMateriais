@@ -2,7 +2,10 @@ import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/r
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
-import Page from './pages/Page';
+import Home from './pages/Home';
+import Doacoes from './pages/Doacoes';
+import FazerDoacao from './pages/FazerDoacao';
+import SolicitarDoacao from './pages/SolicitarDoacao';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -19,6 +22,7 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 /* Theme variables */
 import './theme/variables.css';
@@ -26,6 +30,7 @@ import './theme/variables.css';
 setupIonicReact();
 
 const App: React.FC = () => {
+
   return (
     <IonApp>
       <IonReactRouter>
@@ -33,10 +38,19 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-              <Redirect to="/folder/Inbox" />
+              <Redirect to="/Home" />
             </Route>
-            <Route path="/folder/:name" exact={true}>
-              <Page />
+            <Route path="/Home" exact={true}>
+              <Home/>
+            </Route>
+            <Route path="/Doacoes" exact={true}>
+              <Doacoes/>
+            </Route>
+            <Route path="/SolicitarDoacao" exact={true}>
+              <SolicitarDoacao/>
+            </Route>
+            <Route path="/FazerDoacao" exact={true}>
+              <FazerDoacao/>
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>

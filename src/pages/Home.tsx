@@ -2,8 +2,9 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 import { useParams } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
 import './Page.css';
+import HomeContainer from '../components/HomeContainer';
 
-const Page: React.FC = () => {
+export default function Home() {
 
   const { name } = useParams<{ name: string; }>();
 
@@ -14,19 +15,18 @@ const Page: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>{name}</IonTitle>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">{name}</IonTitle>
+            <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <HomeContainer/>
       </IonContent>
     </IonPage>
   );
 };
-
-export default Page;

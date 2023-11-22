@@ -1,10 +1,9 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useParams } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
-import './Page.css';
+import SolicitarForm from '../components/SolicitarForm';
 
-const Page: React.FC = () => {
-
+export default function SolicitarDoacao() {
   const { name } = useParams<{ name: string; }>();
 
   return (
@@ -14,7 +13,7 @@ const Page: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>{name}</IonTitle>
+          <IonTitle>Solicitar Doação</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -24,9 +23,8 @@ const Page: React.FC = () => {
             <IonTitle size="large">{name}</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <SolicitarForm></SolicitarForm>
       </IonContent>
     </IonPage>
   );
-};
-
-export default Page;
+}
