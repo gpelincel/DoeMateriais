@@ -13,6 +13,8 @@ interface Material {
   cidade: string;
   estado: string;
   url: string;
+  medida: any;
+  quantidade: any;
 }
 
 export default function DoacoesContainer() {
@@ -32,10 +34,13 @@ export default function DoacoesContainer() {
     setInterval(getMaterials, 5000);
   }, []);
 
+  let medidas = ["Metro(s)", "Quilo(s)", "Unidade(s)"];
+
   return (
     <div className="card-grid p-2 min-h-100">
       {materials.map((material, index) => {
         let date = new Date(material.data_limite);
+        let medida_prop = medidas[Number(material.medida)-1];
 
         return (
           <MaterialCard
@@ -47,6 +52,8 @@ export default function DoacoesContainer() {
             cidade={material.cidade}
             estado={material.estado}
             image={material.url}
+            medida={medida_prop}
+            quantidade={material.quantidade}
           />
         );
       })}

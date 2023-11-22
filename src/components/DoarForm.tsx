@@ -1,9 +1,9 @@
 import { Form, Row, Col, Button } from "react-bootstrap";
+import "./DoarForm.css";
 import { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../Firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { Camera, CameraResultType, CameraSource, CameraPhoto } from "@capacitor/camera";
 
 export default function DoarForm() {
   const doadosCollection = collection(db, "materiais_doados");
@@ -18,15 +18,7 @@ export default function DoarForm() {
   const [rua, setRua] = useState("");
   const [numero, setNumero] = useState("");
   const [imageUpload, setImageUpload] = useState<File | undefined>();
-  const [imageUrl, setImageUrl] = useState("");
-
-  async function takePicture() {
-    const image = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
-    });
-    setImageUpload(image as unknown as File);
-  }
+  const [imageurl, setImageurl] = useState("");
 
   async function uploadData() {
     if (!imageUpload) return;
@@ -48,20 +40,6 @@ export default function DoarForm() {
           numero,
           url,
         });
-
-        // Limpar o formulário
-        setNome_material("");
-        setQuantidade("");
-        setMedida("");
-        setDescricao("");
-        setData_limite("");
-        setTelefone("");
-        setCidade("");
-        setEstado("");
-        setRua("");
-        setNumero("");
-        setImageUpload(undefined);
-        setImageUrl("");
       });
     });
   }
@@ -74,7 +52,6 @@ export default function DoarForm() {
           <Form.Control
             type="text"
             placeholder="Nome..."
-            value={nome_material}
             onChange={(e) => setNome_material(e.target.value)}
           />
         </Form.Group>
@@ -86,7 +63,6 @@ export default function DoarForm() {
                 type="number"
                 placeholder="0,00"
                 min={0}
-                value={quantidade}
                 onChange={(e) => setQuantidade(e.target.value)}
               />
             </Form.Group>
@@ -96,7 +72,6 @@ export default function DoarForm() {
               <Form.Label>Medida</Form.Label>
               <Form.Select
                 aria-label="Default select example"
-                value={medida}
                 onChange={(e) => setMedida(e.target.value)}
               >
                 <option>Selecione</option>
@@ -113,7 +88,6 @@ export default function DoarForm() {
             as="textarea"
             placeholder="Descreva o material que você irá doar, inclua dimensões, cores, estado de conservação, entre outros"
             rows={3}
-            value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
           />
         </Form.Group>
@@ -123,7 +97,6 @@ export default function DoarForm() {
           <Form.Control
             type="date"
             placeholder="Selecione uma data"
-            value={data_limite}
             onChange={(e) => setData_limite(e.target.value)}
           />
         </Form.Group>
@@ -133,7 +106,6 @@ export default function DoarForm() {
           <Form.Control
             type="text"
             placeholder="(00)0000-000"
-            value={telefone}
             onChange={(e) => setTelefone(e.target.value)}
           />
         </Form.Group>
@@ -145,7 +117,6 @@ export default function DoarForm() {
               <Form.Control
                 type="text"
                 placeholder="Nome da cidade"
-                value={cidade}
                 onChange={(e) => setCidade(e.target.value)}
               />
             </Form.Group>
@@ -156,7 +127,6 @@ export default function DoarForm() {
               <Form.Control
                 type="text"
                 placeholder="AA"
-                value={estado}
                 onChange={(e) => setEstado(e.target.value)}
               />
             </Form.Group>
@@ -169,7 +139,6 @@ export default function DoarForm() {
               <Form.Control
                 type="text"
                 placeholder="Nome da rua"
-                value={rua}
                 onChange={(e) => setRua(e.target.value)}
               />
             </Form.Group>
@@ -181,7 +150,6 @@ export default function DoarForm() {
                 type="number"
                 placeholder="00"
                 min={0}
-                value={numero}
                 onChange={(e) => setNumero(e.target.value)}
               />
             </Form.Group>
@@ -190,25 +158,19 @@ export default function DoarForm() {
 
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Foto do material</Form.Label>
-          <div className="d-flex">
-            <Button variant="outline-secondary" onClick={takePicture}>
-              Tirar Foto
-            </Button>
-            <Form.Control
-              className="ms-2"
-              capture
-              type="file"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                const fileInput = event.target as HTMLInputElement;
-                const files = fileInput.files;
+          <Form.Control
+            capture
+            type="file"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const fileInput = event.target as HTMLInputElement;
+              const files = fileInput.files;
 
-                if (files && files.length > 0) {
-                  const file = files[0];
-                  setImageUpload(file);
-                }
-              }}
-            />
-          </div>
+              if (files && files.length > 0) {
+                const file = files[0];
+                setImageUpload(file);
+              }
+            }}
+          />
         </Form.Group>
 
         <div className="d-flex justify-content-center gap-2 w-100 mt-4">
