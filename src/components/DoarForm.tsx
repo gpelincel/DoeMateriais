@@ -17,15 +17,13 @@ export default function DoarForm() {
   const [estado, setEstado] = useState("");
   const [rua, setRua] = useState("");
   const [numero, setNumero] = useState("");
-  const [imageUpload, setImageUpload] = useState();
+  const [imageUpload, setImageUpload] = useState<File | undefined>();
   const [imageurl, setImageurl] = useState("");
 
   async function uploadData() {
     if (!imageUpload) return;
 
-    if (imageUpload !== null) {
-      const imageRef = ref(storage, `doemateriais/images/${imageUpload.name}`);
-    }
+    const imageRef = ref(storage, `doemateriais/images/${imageUpload.name}`);
 
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
@@ -163,8 +161,14 @@ export default function DoarForm() {
           <Form.Control
             capture
             type="file"
-            onChange={(event) => {
-              setImageUpload(event.target.files[0]);
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const fileInput = event.target as HTMLInputElement;
+              const files = fileInput.files;
+
+              if (files && files.length > 0) {
+                const file = files[0];
+                setImageUpload(file);
+              }
             }}
           />
         </Form.Group>
