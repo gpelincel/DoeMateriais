@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../Firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useIonToast } from "@ionic/react";
 
 export default function DoarForm() {
   const doadosCollection = collection(db, "materiais_doados");
@@ -19,6 +20,8 @@ export default function DoarForm() {
   const [numero, setNumero] = useState("");
   const [imageUpload, setImageUpload] = useState<File | undefined>();
   const [imageurl, setImageurl] = useState("");
+  const [present] = useIonToast();
+
 
   async function uploadData() {
     if (!imageUpload) return;
@@ -42,6 +45,24 @@ export default function DoarForm() {
         });
       });
     });
+
+    present({
+      message: "Cadastrado com sucesso!",
+      duration: 1500,
+      position: "middle",
+    });
+
+    setNome_material("");
+    setQuantidade("");
+    setMedida("");
+    setDescricao("");
+    setData_limite("");
+    setTelefone("");
+    setCidade("");
+    setEstado("");
+    setRua("");
+    setNumero("");
+    setImageUpload(undefined);
   }
 
   return (
