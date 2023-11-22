@@ -12,6 +12,7 @@ interface Material {
   id: string;
   cidade: string;
   estado: string;
+  url: string;
 }
 
 export default function DoacoesContainer() {
